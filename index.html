@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Music Therapy App</title>
+    <link rel="stylesheet" href="style.css?v=1.1" />
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+  </head>
+  <body>
+    <div class="header">Music Therapy App</div>
+
+    <div class="main-content">
+      <div class="left-section">
+        <div class="camera-window">
+          <video id="camera" autoplay playsinline></video>
+        </div>
+        <button class="capture-btn">Capture</button>
+        <div id="dominant-emotion" class="emotion-text">Dominant Emotion:</div>
+      </div>
+
+      <div class="right-section">
+        <div class="mood-buttons">
+          <button
+            class="mood-btn"
+            data-mood="happy"
+            onclick="selectMood(this, 'happy')"
+          >
+            H
+          </button>
+          <button
+            class="mood-btn"
+            data-mood="sad"
+            onclick="selectMood(this, 'sad')"
+          >
+            S
+          </button>
+          <button
+            class="mood-btn"
+            data-mood="angry"
+            onclick="selectMood(this, 'angry')"
+          >
+            A
+          </button>
+          <button
+            class="mood-btn"
+            data-mood="neutral"
+            onclick="selectMood(this, 'neutral')"
+          >
+            N
+          </button>
+          <button
+            class="mood-btn"
+            data-mood="surprise"
+            onclick="selectMood(this, 'surprise')"
+          >
+            S
+          </button>
+        </div>
+
+        <div class="playlist" id="playlist">
+          <!-- Songs will be loaded here -->
+        </div>
+      </div>
+    </div>
+
+    <footer class="player-bar">
+      <div class="song-thumbnail">
+        <img src="https://via.placeholder.com/50" alt="Song Cover" />
+      </div>
+
+      <div class="song-name">Song Name</div>
+
+      <div class="controls">
+        <button>⏮️</button>
+        <button>⏯️</button>
+        <button>⏭️</button>
+      </div>
+
+      <div class="progress-container">
+        <span class="current-time">0:20</span>
+        <input type="range" class="progress-bar" min="0" max="100" value="20" />
+        <span class="total-time">3:00</span>
+      </div>
+
+      <div class="volume">
+        🔊
+        <input type="range" class="volume-bar" min="0" max="100" value="80" />
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      window.onSpotifyWebPlaybackSDKReady = () => {
+        const token = "YOUR_SPOTIFY_ACCESS_TOKEN"; // Replace this with your actual token
+
+        const player = new Spotify.Player({
+          name: "Web Playback SDK Player",
+          getOAuthToken: (cb) => {
+            cb(token);
+          },
+          volume: 0.5,
+        });
+
+        // Error handling
+        player.addListener("initialization_error", ({ message }) => {
+          console.error(message);
+        });
+        player.addListener("authentication_error", ({ message }) => {
+          console.error(message);
+        });
+        player.addListener("account_error", ({ message }) => {
+          console.error(message);
+        });
+        player.addListener("playback_error", ({ message }) => {
+          console.error(message);
+        });
+
+        // Ready
+        player.addListener("ready", ({ device_id }) => {
+          console.log("Ready with Device ID", device_id);
+          // Save this device_id to use in the next step
+        });
+
+        player.connect();
+      };
+    </script>
+  </body>
+</html>
