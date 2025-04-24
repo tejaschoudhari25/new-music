@@ -3,112 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Therapy Player</title>
+    <title>Simple Music Player</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #121212; /* Dark background */
+            color: #e0e0e0; /* Light text */
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        #camera {
-            width: 100%;
-            max-width: 640px;
-            height: auto;
-        }
-
-        .mood-buttons {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-        }
-
-        .mood-buttons button {
-            padding: 10px 20px;
-            margin: 0 10px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-
-        .mood-buttons button.active {
-            background-color: #28a745;
-        }
-
-        #dominant-emotion {
             text-align: center;
-            font-size: 20px;
-            margin-top: 20px;
         }
 
-        #playlist {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 30px;
+        .player-container {
+            margin-top: 50px;
+            background-color: #1c1c1c; /* Dark player background */
+            border-radius: 10px;
+            padding: 20px;
+            width: 320px;
+            margin: 0 auto;
         }
 
-        .song {
-            background-color: #fff;
+        h1 {
+            color: #ffffff;
+        }
+
+        .song-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .song-list li {
             padding: 10px;
             margin: 5px;
-            width: 300px;
-            text-align: center;
+            background-color: #333;
             border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        .capture-btn {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #ff6347;
-            color: white;
-            border: none;
-            border-radius: 5px;
+        .song-list li:hover {
+            background-color: #555;
         }
 
         #audioPlayer {
-            display: block;
             width: 100%;
-            margin-top: 30px;
+            margin-top: 20px;
+            background-color: #333;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .btn {
+            background-color: #6200ea; /* Purple */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #3700b3; /* Darker purple */
         }
     </style>
 </head>
 <body>
 
-    <!-- Camera feed -->
-    <video id="camera" autoplay></video>
+    <div class="player-container">
+        <h1>Simple Music Player</h1>
+        
+        <ul class="song-list">
+            <li onclick="playSong('song1.mp3')">Song 1</li>
+            <li onclick="playSong('song2.mp3')">Song 2</li>
+            <li onclick="playSong('song3.mp3')">Song 3</li>
+            <li onclick="playSong('song4.mp3')">Song 4</li>
+        </ul>
 
-    <!-- Mood buttons -->
-    <div class="mood-buttons">
-        <button data-mood="happy">Happy</button>
-        <button data-mood="sad">Sad</button>
-        <button data-mood="angry">Angry</button>
-        <button data-mood="neutral">Neutral</button>
-        <button data-mood="surprise">Surprise</button>
+        <audio id="audioPlayer" controls></audio>
+
+        <button class="btn" onclick="pauseSong()">Pause</button>
+        <button class="btn" onclick="stopSong()">Stop</button>
     </div>
 
-    <!-- Dominant Emotion display -->
-    <div id="dominant-emotion">Dominant Emotion: </div>
+    <script>
+        const audioPlayer = document.getElementById("audioPlayer");
 
-    <!-- Capture button -->
-    <button class="capture-btn">Capture Emotion</button>
+        // Function to play the song
+        function playSong(songFile) {
+            audioPlayer.src = songFile; // Set the audio source to the selected song
+            audioPlayer.play(); // Play the song
+        }
 
-    <!-- Playlist display -->
-    <div id="playlist"></div>
+        // Function to pause the song
+        function pauseSong() {
+            audioPlayer.pause();
+        }
 
-    <!-- Audio Player -->
-    <audio id="audioPlayer" controls></audio>
-
-    <!-- Link to external script -->
-    <script src="script.js"></script>
+        // Function to stop the song (pause and reset)
+        function stopSong() {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0; // Reset to the beginning
+        }
+    </script>
 
 </body>
 </html>
